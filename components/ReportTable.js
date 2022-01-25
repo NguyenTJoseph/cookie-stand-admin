@@ -1,4 +1,4 @@
-import { useState } from "react";
+import StandRow from "./StandRow";
 
 export default function ReportTable(props) {
   return (
@@ -18,20 +18,23 @@ export default function ReportTable(props) {
               <th className="p-2">Total</th>
             </tr>
             {props.stores.map((store) => (
-              <tr key={store.id}>
-                <td className="border-2">{store.location}</td>
-                {store.hourly_sales.map((hour) => (
-                  <td className="border-2" key={hour}>{hour}</td>
-                ))}
-                <td className="border-2">{store.total}</td>
-              </tr>
+              <StandRow
+                key={store.id}
+                info={store}
+                deleteStand={props.deleteResource}
+              />
             ))}
             <tfoot>
               <tr>
                 <th className="border-2">Totals</th>
-                {props.totals.map((total, index) => (
-                  <td className="border-2" key={index}>{total}</td>
-                ))}
+                {props.hours.map((hour, index) => {
+                  let total = 0;
+                  props.stores.map(
+                    (store) => (total += store.hourly_sales[index])
+                  );
+                  return <td className="border-2" key={index}>{total}</td>;
+                })}
+                <td className="border-2">{props.stores.reduce((prev, curr) => (parseInt(prev.description) || 0) + parseInt(curr.description))}</td>
               </tr>
             </tfoot>
           </table>
