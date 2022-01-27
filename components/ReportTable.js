@@ -1,6 +1,12 @@
 import StandRow from "./StandRow";
 
 export default function ReportTable(props) {
+  function allTotals(){
+    let total = 0
+    props.stores.map(store => total += parseInt(store.description))
+    return total
+  }
+
   return (
     <main>
       <div className="text-center">
@@ -34,7 +40,7 @@ export default function ReportTable(props) {
                   );
                   return <td className="border-2" key={index}>{total}</td>;
                 })}
-                <td className="border-2">{props.stores.reduce((prev, curr) => (parseInt(prev.description) || 0) + parseInt(curr.description))}</td>
+                <td className="border-2">{allTotals()}</td>
               </tr>
             </tfoot>
           </table>

@@ -2,6 +2,7 @@ export default function LoginForm(props) {
   async function handleSubmit(e) {
     e.preventDefault();
     props.login(e.target.username.value, e.target.password.value);
+    
   }
   return (
     <form onSubmit={handleSubmit}>
